@@ -84,8 +84,11 @@ class article
 
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("DELETE FROM CBCArticle WHERE ArticleID=?");
-			$stmt->bind_param("i", $id);
+			$stmt =$conn->prepare("UPDATE CBCArticle SET ArticleDeleted=1 WHERE ArticleID=?");
+			$stmt->bind_param("i", $newID);
+
+			$newID =mysqli_real_escape_string($conn, $id);
+
 
 			if($stmt->execute()){
 				return "the process is complete";
@@ -105,9 +108,16 @@ class article
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCArticle WHERE ArticlePage = $page";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt=$conn->prepare("SELECT * FROM CBCArticle WHERE ArticlePage = ? and ArticleDeleted = 0");
+			$stmt->bind_param("i", $newPage);
+			$newPage =mysqli_real_escape_string($conn, $page);
+
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 	}

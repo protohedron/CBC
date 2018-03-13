@@ -44,35 +44,58 @@
 				unlink($remove);
 			}
 
-			$query = "DELETE FROM cbcpicture WHERE pictureID='$id'";
-			$results = $conn->query($query);
-			$conn->close();
+			$stmt =$conn->prepare("UPDATE cbcpicture SET PictureDeleted = 1 WHERE PictureID=?");
+			$stmt->bind_param("i", $newID);
+
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
+
+
 		}
 		function fetchLocationByPage($page){
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 			$num = 0;
 			$return = array();
-					if (filter_var($page, FILTER_VALIDATE_INT) == false){
-			    		return "Page must be a valid integer";
-					}
-					$query = "SELECT * FROM cbcpicture WHERE picturePage=$page";
-					$results = $conn->query($query);
-					$rows = $results->fetch_all(MYSQLI_ASSOC);
+
+			if (filter_var($page, FILTER_VALIDATE_INT) == false){
+			    return "Page must be a valid integer";
+			}
+
+					$stmt =$conn->prepare("SELECT * FROM cbcpicture WHERE picturePage=?");
+					$stmt->bind_param("i", $newPage);
+
+					$newID =mysqli_real_escape_string($conn, $page);
+
+					$stmt->execute();
+					$res = $stmt->get_result();
+					$rows = $res->fetch_all(MYSQLI_ASSOC);
 					foreach($rows as $row){
 						$return[$num] = $row['PictureLocation']."\\".$row['PictureName'];
 						$num++;
 					}
 					return $return;
 		}
+
 		function fetchAll(){
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$query = "SELECT * FROM cbcpicture";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM cbcpicture WHERE pictureDeleted=0");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
 			return $return;
 		}
+
 		function setMinistryPicture($minID, $name, $tmpname, $type){
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);

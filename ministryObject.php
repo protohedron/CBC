@@ -78,8 +78,10 @@ class ministry
 
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("DELETE FROM CBCMinistry WHERE MinistryID=?");
-			$stmt->bind_param("i", $id);
+			$stmt =$conn->prepare("UPDATE CBCMinistry SET MinistryDeleted=1 WHERE MinistryID=?");
+			$stmt->bind_param("i", $newID);
+			$newID =mysqli_real_escape_string($conn, $id);
+
 
 			if($stmt->execute()){
 				return "the process is complete";
@@ -95,9 +97,12 @@ class ministry
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCMinistry";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCMinistry WHERE MinistryDeleted = 0");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 	}
@@ -109,9 +114,15 @@ class ministry
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCMinistry Where MinistryID = $id";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCMinistry Where MinistryID = ? WHERE MinsityDeleted = 0");
+			$stmt->bind_param("i", $newID);
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+
+			$stmt->close();
 			$conn->close();
 			return $return;
 	}

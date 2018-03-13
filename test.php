@@ -1,9 +1,9 @@
 <?php
-	include "userObject.php";
+	include "ministryObject.php";
 
-	$object = new user;
+	$object = new ministry;
 
-	$return = $object->checkAnswerByID('Jon' ,2);
+	$return = $object->FetchAllMinistry();
 	print_r($return);
 
 

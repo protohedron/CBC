@@ -78,8 +78,11 @@ class missions
 
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("DELETE FROM CBCMissions WHERE MissionsID=?");
-			$stmt->bind_param("i", $id);
+			$stmt =$conn->prepare("UPDATE CBCMissions SET MissionsDeleted = 1 WHERE MissionsID=?");
+			$stmt->bind_param("i", $newID);
+
+			$newID =mysqli_real_escape_string($conn, $id);
+
 
 			if($stmt->execute()){
 				return "the process is complete";
@@ -95,9 +98,12 @@ class missions
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCMissions";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCMissions WHERE MissionsDeleted = 0");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 	}
@@ -109,9 +115,16 @@ class missions
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCMissions Where MissionsID = $id";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCMissions Where MissionsID = ? and MissionsDeleted = 0");
+			$stmt->bind_param("i", $newID);
+
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 	}

@@ -135,8 +135,10 @@
 
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("DELETE FROM cbcStaff WHERE staffID=?");
+			$stmt =$conn->prepare("UPDATE cbcStaff SET staffDelete = 1 WHERE staffID=?");
 			$stmt->bind_param("i", $id);
+			$newID =mysqli_real_escape_string($conn, $id);
+
 
 			if($stmt->execute()){
 				return "the process is complete";
@@ -153,9 +155,12 @@
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCstaff";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCstaff");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}
@@ -168,9 +173,15 @@
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM cbcStaff WHERE staffId = $id";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM cbcStaff WHERE staffId = ?");
+			$stmt->bind_param("i", $newID);
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}

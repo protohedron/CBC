@@ -183,7 +183,7 @@
 			}
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt=$conn->prepare("DELETE FROM user WHERE userID=?");
+			$stmt=$conn->prepare("UPDATE cbcuser SET userDeleted = 1 WHERE userID=?");
 			$stmt->bind_param("i", $newID);
 			$newID = mysqli_real_escape_string($conn, $id);
 			$stmt->execute(); 
@@ -197,9 +197,15 @@
 	    		return "ID must be a valid integer";
 			}
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$query ="SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserID = $id";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserID = ?");
+			$stmt->bind_param("i", $newID);
+			$newID = mysqli_real_escape_string($conn, $id);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}
@@ -207,9 +213,12 @@
 			include "inc.php";
 			
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$query ="SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}
@@ -217,9 +226,15 @@
 			include "inc.php";
 			
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$query ="SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserName = '$username'";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserName = '?'");
+			$stmt->bind_param("s", $newUsername);
+			$newUsername = mysqli_real_escape_string($conn, $username);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}

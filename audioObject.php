@@ -37,9 +37,19 @@
 				unlink($remove);
 			}
 
-			$query = "DELETE FROM cbcaudio WHERE audioID='$id'";
-			$results = $conn->query($query);
-			$conn->close();
+			$stmt =$conn->prepare("UPDATE cbcaudio SET audioDeleted = 1 WHERE audioID=?");
+			$stmt->bind_param("i", $newID);
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
 		}
 		function editAudioName($id, $name){
 			if (filter_var($id, FILTER_VALIDATE_INT) == false){
@@ -54,17 +64,26 @@
 			$newName =mysqli_real_escape_string($conn, $name);
 			$newID =mysqli_real_escape_string($conn, $id);
 
-			$stmt->execute();
-			$stmt->close();
-			$conn->close();
+			if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
 		}
 		function fetchAudioAll(){
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCAudio ORDER BY audioDate";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt =$conn->prepare("SELECT * FROM CBCAudio WHERE audioDeleted = 0 ORDER BY audioDate");
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 		}
@@ -76,9 +95,15 @@
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$query ="SELECT * FROM CBCAudio WHERE audioID = $id";
-			$results = $conn->query($query);
-			$return = $results->fetch_all(MYSQLI_ASSOC);
+			$stmt=$conn->prepare("SELECT * FROM CBCAudio WHERE audioID = ? AND audioDeleted = 0");
+			$stmt->bind_param("i", $newID);
+			$newID = mysqli_real_escape_string($conn, $id);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
 			$conn->close();
 			return $return;
 
