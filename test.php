@@ -1,9 +1,8 @@
 <?php
-	include "ministryObject.php";
+	include "CalanderObject.php";
 
-	$object = new ministry;
-
-	$return = $object->FetchAllMinistry();
+	$object = new calander();
+	$return = $object->fetchSingleEvent(3);
 	print_r($return);
 
 
