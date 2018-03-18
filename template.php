@@ -9,8 +9,8 @@
 	<title>CBC</title>
 	<meta charset = "UTF-8">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="cbc.css">
-	<link rel="icon" type="image/png" href="Images/favicon.png">
+	<link rel="stylesheet" href="css/cbc.css">
+	<link rel="icon" type="image/png" href="img/favicon.png">
 </head>
 
 <body>
@@ -20,7 +20,7 @@
 	
 	<!--Logo holder-->
 	<div class="logo_holder">
-		<img class="logo" src="Images/logo.png"></img>
+		<img class="logo" src="img/logo.png"></img>
 	</div>
 	
 	<!--Nav bar-->
