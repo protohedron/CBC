@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 15, 2018 at 04:09 PM
+-- Generation Time: Mar 21, 2018 at 08:49 PM
 -- Server version: 10.1.13-MariaDB
 -- PHP Version: 5.6.21
 
@@ -60,8 +60,18 @@ CREATE TABLE `cbccalander` (
   `CalanderName` varchar(50) NOT NULL,
   `CalanderStart` datetime NOT NULL,
   `CalanderEnd` datetime NOT NULL,
-  `CalanderDescription` text NOT NULL
+  `CalanderDescription` text NOT NULL,
+  `CalanderDeleted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `cbccalander`
+--
+
+INSERT INTO `cbccalander` (`CalanderID`, `CalanderName`, `CalanderStart`, `CalanderEnd`, `CalanderDescription`, `CalanderDeleted`) VALUES
+(1, 'name1', '2017-03-15 00:00:00', '2017-03-17 00:00:00', 'description1', 0),
+(2, 'name', '2017-03-15 00:00:00', '2017-03-16 00:00:00', 'description', 0),
+(3, 'name', '2017-03-15 00:00:00', '2017-03-16 00:00:00', 'description', 0);
 
 -- --------------------------------------------------------
 
@@ -92,18 +102,19 @@ INSERT INTO `cbcministry` (`MinistryID`, `MinistryName`, `MinistryBody`, `Minist
 CREATE TABLE `cbcmissions` (
   `MissionsID` int(11) NOT NULL,
   `MissionsName` varchar(50) NOT NULL,
-  `MissionsBody` text NOT NULL,
-  `MissionsDeleted` int(11) NOT NULL
+  `MissionsDescrip` text NOT NULL,
+  `MissionsDeleted` int(11) NOT NULL,
+  `MissionsBody` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `cbcmissions`
 --
 
-INSERT INTO `cbcmissions` (`MissionsID`, `MissionsName`, `MissionsBody`, `MissionsDeleted`) VALUES
-(2, 'Test', 'Test1', 0),
-(3, 'Test', 'Test', 0),
-(5, 'Hannah D. Reeves', 'Missionary to Myanmar', 0);
+INSERT INTO `cbcmissions` (`MissionsID`, `MissionsName`, `MissionsDescrip`, `MissionsDeleted`, `MissionsBody`) VALUES
+(2, 'Test', 'Test1', 0, ''),
+(3, 'Test', 'Test', 0, ''),
+(5, 'Hannah D. Reeves', 'Missionary to Myanmar', 0, '');
 
 -- --------------------------------------------------------
 
@@ -156,13 +167,6 @@ CREATE TABLE `cbcstaff` (
   `StaffPosition` varchar(50) NOT NULL,
   `StaffDeleted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `cbcstaff`
---
-
-INSERT INTO `cbcstaff` (`StaffID`, `StaffName`, `StaffInfo`, `StaffPosition`, `StaffDeleted`) VALUES
-(1, 'Sarah Jane Gibbon', 'Personnal Stuff', 'Worship and Children\\''s Pastor', 0);
 
 -- --------------------------------------------------------
 
@@ -287,7 +291,7 @@ ALTER TABLE `cbcaudio`
 -- AUTO_INCREMENT for table `cbccalander`
 --
 ALTER TABLE `cbccalander`
-  MODIFY `CalanderID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `CalanderID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `cbcministry`
 --
@@ -307,7 +311,7 @@ ALTER TABLE `cbcpicture`
 -- AUTO_INCREMENT for table `cbcstaff`
 --
 ALTER TABLE `cbcstaff`
-  MODIFY `StaffID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `StaffID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cbcuser`
 --

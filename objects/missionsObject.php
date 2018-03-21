@@ -1,15 +1,16 @@
 <?php
 class missions
 {
-	function CreateMissions($name, $body){
+	function CreateMissions($name, $body, $descrip){
 		include "inc.php";
 		$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 
-		$stmt =$conn->prepare("INSERT INTO CBCMissions (MissionsName, MissionsBody) VALUES (?,?)");
-		$stmt->bind_param("ss", $newName, $newBody);
+		$stmt =$conn->prepare("INSERT INTO CBCMissions (MissionsName, MissionsBody, MissionsDescrip) VALUES (?,?,?)");
+		$stmt->bind_param("sss", $newName, $newBody, $newDescrip);
 
 			$newName = mysqli_real_escape_string($conn, $name);
 			$newBody =mysqli_real_escape_string($conn, $body);
+			$newDescrip =mysqli_real_escape_string($conn, $descrip);
 
 			if($stmt->execute()){
 				return "the process is complete";
@@ -57,6 +58,30 @@ class missions
 		$stmt->bind_param("si", $newName, $newID);
 
 		$newName =mysqli_real_escape_string($conn, $name);
+		$newID =mysqli_real_escape_string($conn, $id);
+
+		if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
+	}
+	function EditMissionsDescrip($descrip, $id){
+			if (filter_var($id, FILTER_VALIDATE_INT) == false){
+				return "Variables do not match required type";
+			}
+			
+		include "inc.php";
+		$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+
+		$stmt =$conn->prepare("UPDATE CBCMissions SET MissionsDescrip=? WHERE MissionsID=?");
+		$stmt->bind_param("si", $newDescrip, $newID);
+
+		$newDescrip =mysqli_real_escape_string($conn, $descrip);
 		$newID =mysqli_real_escape_string($conn, $id);
 
 		if($stmt->execute()){
