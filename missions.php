@@ -63,7 +63,7 @@
 						$descrip = $missionCards["MissionsDescrip"];
 						$id = $missionCards["MissionsID"]
 			?>
-						<div class="row">
+						<div class="row rowPadVert">
 							<div class="col-lg-8 offset-lg-2">
 								<div class="card">
 									<div class="card-body">
@@ -87,16 +87,11 @@
 								</div>
 							</div>
 						</div>
-						<div class="row rowPadVert">
-							<div class="col text-center">
-								<a href="mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
-							</div>
-						</div>
 			<?php
 					}
 					else {
 			?>
-						<div class="row">
+						<div class="row rowPadVert">
 							<div class="col-lg-8 offset-lg-2">
 								<div class="card">
 									<div class="card-body">
@@ -111,6 +106,15 @@
 						</div>
 			<?php
 					}
+				}
+				if ($secure) {
+			?>
+					<div class="row rowPadVert">
+						<div class="col text-center">
+							<a href="mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
+						</div>
+					</div>
+			<?php
 				}
 			?>
 		</div>
