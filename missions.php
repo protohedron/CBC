@@ -13,13 +13,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="css/cbc.css">
 		<?php include_once("php_partial/css_includes.php"); ?>
+		<?php include_once("php_partial/js_includes.php"); ?>
 		<link rel="icon" type="image/png" href="img/favicon.png">
-		<!-- Summernote-->
-		<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-		<script src="js/bootstrap.min.js"></script>
-		<link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 	</head>	
 	<body>
 		<!--Logo and nav holder-->
