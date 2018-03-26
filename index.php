@@ -26,7 +26,7 @@
 			<!--Nav bar-->
 			<nav>
 				<a href="">Ministries</a>
-				<a href="">Calendar</a>
+				<a href="calendar.php">Calendar</a>
 				<a href="">Missions</a>
 				<a href="">Online Giving</a>
 				<a href="">Sermons</a>
