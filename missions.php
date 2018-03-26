@@ -75,21 +75,7 @@
 											<br>
 											<h3 style="text-align: center">Description</h3>
 											<textarea id="summernote_<?php echo $id."_2"; ?>" name="descrip<?php echo $id?>"><?php echo str_replace("\\", "", $descrip);?></textarea>
-											<script>
-												//Summernote init
-												$(document).ready(function () {
-												
-													$('#summernote_<?php echo $id ?>').summernote({
-														tabsize: 2,
-														height: 70
-													});
-													$('#summernote_<?php echo $id. "_2" ?>').summernote({
-														tabsize: 2,
-														height: 70
-													});
-												$('textarea').html($('#summernote_<?php echo $id?>').code());
-												});
-											</script>
+											<?php include_once("php_partial/summernote.php"); ?>
 											<div style="text-align: center">
 												<br>
 												<input type="submit" class="btn btn-outline-secondary btn-lg"></input>
@@ -99,6 +85,11 @@
 										</form>
 									</div>
 								</div>
+							</div>
+						</div>
+						<div class="row rowPadVert">
+							<div class="col text-center">
+								<a href="mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
 							</div>
 						</div>
 			<?php
@@ -122,12 +113,6 @@
 					}
 				}
 			?>
-			<div class="row rowPadVert">
-				<div class="col text-center">
-					<a href="mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
-				</div>
-			</div>
-			<!--/Missions Card Edit-->
 		</div>
 	</body>
 </html>
