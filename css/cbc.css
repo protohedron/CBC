@@ -72,6 +72,16 @@ body {
 	background-color: #B0BEC5;
 }
 
+/* Padding Tools */
+.rowPadVert {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+.rowPadHorz {
+	padding-left: 2rem;
+	padding-right: 2rem;
+}
+
 /*Header, logo, and nav*/
 .top_bar {
 	width: 100%;
@@ -216,7 +226,6 @@ nav a:hover:before {
 .header_title {
 	text-align: center;
 	color: white;
-	font-family: tweb;
 	font-size: 3em;
 	font-weight: normal;
 	letter-spacing: .05em;
