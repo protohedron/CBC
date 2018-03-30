@@ -15,5 +15,5 @@ How to use the new MVC structure
   - Else
     - It's a controller
   
-- If the code is an object that relates to the database (primarily PHP objects)
+- If the code is an object that relates to the database (primarily PHP objects/classes)
   - It's a model
