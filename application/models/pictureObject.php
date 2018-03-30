@@ -10,12 +10,12 @@
 			include "inc.php";
 
 			if($type == "images/jpeg" OR "images/jpg" OR "images/png" OR "images/gif"){
-				$location = "images\\".$name;
+				$location = "../../public/images/".$name;
 				move_uploaded_file($tmpName, $location);
 
 				$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 				$name1 = mysqli_real_escape_string($conn, $name);
-				$location1 = mysqli_real_escape_string($conn, "images"); 
+				$location1 = mysqli_real_escape_string($conn, "public/images"); 
 				$page1 = mysqli_real_escape_string($conn, $page);
 	
 				$query = "INSERT INTO cbcpicture(PictureName, PictureLocation, PicturePage)VALUES('$name1','$location1',$page1)";
@@ -40,7 +40,7 @@
 
 			$rows = $results->fetch_all(MYSQLI_ASSOC);
 			foreach($rows as $row){
-				$remove = $row['PictureLocation']."\\".$row['PictureName'];
+				$remove = $row['PictureLocation']."/".$row['PictureName'];
 				unlink($remove);
 			}
 
@@ -80,7 +80,7 @@
 					$res = $stmt->get_result();
 					$rows = $res->fetch_all(MYSQLI_ASSOC);
 					foreach($rows as $row){
-						$return[$num] = $row['PictureLocation']."\\".$row['PictureName'];
+						$return[$num] = $row['PictureLocation']."/".$row['PictureName'];
 						$num++;
 					}
 					return $return;
@@ -101,11 +101,11 @@
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 
 			if($type == "images/jpeg" OR "images/jpg" OR "images/png" OR "images/gif"){
-				$location = "images\\".$name;
+				$location = "../../public/images/".$name;
 				move_uploaded_file($tmpname, $location);
 				
 				$name1 = mysqli_real_escape_string($conn, $name);
-				$location1 = mysqli_real_escape_string($conn, "images"); 
+				$location1 = mysqli_real_escape_string($conn, "public/images"); 
 				$page1 = mysqli_real_escape_string($conn, $minID);
 	
 				$query = "INSERT INTO cbcpicture(PictureName, PictureLocation, PicturePage)VALUES('$name1','$location1', $page1)";

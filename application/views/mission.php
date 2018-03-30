@@ -1,5 +1,5 @@
 <?php
-include_once("objects/missionsObject.php");
+include_once("../models/missionsObject.php");
 $missions = new missions(); 
 
 $id = $_GET["id"];
@@ -25,13 +25,13 @@ foreach($missionsArray as $missionCards) {
 	<title>CBC - <?php echo $pTitle; ?></title>
 	<meta charset = "UTF-8">	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<?php include_once("php_partial/css_includes.php"); ?>
-    <link rel="stylesheet" href="css/cbc.css">
-    <link rel="icon" type="image/png" href="img/favicon.png">
+	<?php include_once("../views/partials/css_includes.php"); ?>
+    <link rel="stylesheet" href="../../public/css/cbc.css">
+    <link rel="icon" type="image/png" href="../../public/images/favicon.png">
     <!-- include summernote css/js -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="../../public/js/bootstrap.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script>
 
@@ -42,7 +42,7 @@ foreach($missionsArray as $missionCards) {
 <div class="top_bar_temp">
 	<!--Logo holder-->
 	<div class="logo_holder">
-		<img class="logo" src="img/logo.png"></img>
+		<img class="logo" src="../../public/images/logo.png"></img>
 	</div>
 	
 	<!--Nav bar-->  

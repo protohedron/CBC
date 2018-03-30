@@ -6,13 +6,13 @@
 				
 			include "inc.php";
 
-				$location = "audio\\".$file;
+				$location = "../../public/audio/".$file;
 				move_uploaded_file($tmpName, $location);
 
 				$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 				$name1 = mysqli_real_escape_string($conn, $name);
 				$file1 = mysqli_real_escape_string($conn, $file);
-				$location1 = mysqli_real_escape_string($conn, "audio"); 
+				$location1 = mysqli_real_escape_string($conn, "public/audio"); 
 				$date1 = mysqli_real_escape_string($conn, $date);
 	
 				$query = "INSERT INTO cbcaudio(AudioName, AudioLocation, AudioFile, AudioDate)VALUES('$name1','$location1', '$file1', '$date1')";
@@ -33,7 +33,7 @@
 
 			$rows = $results->fetch_all(MYSQLI_ASSOC);
 			foreach($rows as $row){
-				$remove = $row['AudioLocation']."\\".$row['AudioFile'];
+				$remove = $row['AudioLocation']."/".$row['AudioFile'];
 				unlink($remove);
 			}
 

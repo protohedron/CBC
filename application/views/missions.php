@@ -1,5 +1,5 @@
 <?php
-	include_once("objects/missionsObject.php");
+	include_once("../models/missionsObject.php");
 	$missions = new missions(); 
 	//Placeholder for showing edit version or not
 	$secure = false;
@@ -11,17 +11,17 @@
 		<title>CBC - Missions</title>
 		<meta charset = "UTF-8">	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="css/cbc.css">
-		<?php include_once("php_partial/css_includes.php"); ?>
-		<?php include_once("php_partial/js_includes.php"); ?>
-		<link rel="icon" type="image/png" href="img/favicon.png">
+		<link rel="stylesheet" href="../../public/css/cbc.css">
+		<?php include_once("../views/partials/css_includes.php"); ?>
+		<?php include_once("../views/partials/js_includes.php"); ?>
+		<link rel="icon" type="image/png" href="../../public/images/favicon.png">
 	</head>	
 	<body>
 		<!--Logo and nav holder-->
 		<div class="top_bar_temp">
 			<!--Logo holder-->
 			<div class="logo_holder">
-				<img class="logo" src="img/logo.png"></img>
+				<img class="logo" src="../../public/images/logo.png"></img>
 			</div>
 
 			<!--Nav bar-->  
@@ -43,7 +43,7 @@
 
 			<div class="row rowPadVert rowPadHorz">
 				<div class="col text-center">
-					<img class="img-fluid" src="img/cbcComission.jpg" alt="Comission, fulfilling the goal together.">
+					<img class="img-fluid" src="../../public/images/cbcComission.jpg" alt="Comission, fulfilling the goal together.">
 					<h4 class="filler-text">Community Bible Church helps to support over a dozen missionaries across the world and has been a part of several church plants.</h4>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 												<br>
 												<input type="submit" class="btn btn-outline-secondary btn-lg"></input>
 												<a href="mission.php?id=<?php echo $id;?>"><button type="button" class="btn btn-outline-secondary btn-lg">Edit</button></a>
-												<a href="mission-delete.php?id=<?php echo $id;?>"><button type="button" class="btn btn-outline-secondary btn-lg">Delete</button></a>
+												<a href="../controllers/mission-delete.php?id=<?php echo $id;?>"><button type="button" class="btn btn-outline-secondary btn-lg">Delete</button></a>
 											</div>
 										</form>
 									</div>
@@ -106,7 +106,7 @@
 			?>
 					<div class="row rowPadVert">
 						<div class="col text-center">
-							<a href="mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
+							<a href="../controllers/mission-create.php" class="btn btn-outline-secondary btn-lg">Create</a>
 						</div>
 					</div>
 			<?php

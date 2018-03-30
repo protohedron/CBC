@@ -9,8 +9,8 @@
 		<title>CBC</title>
 		<meta charset = "UTF-8">	
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<?php include_once("php_partial/css_includes.php"); ?>
-		<link rel="icon" type="image/png" href="img/favicon.png"> <!--  Favicon needs to be generated -->
+		<?php include_once("application/views/partials/css_includes.php"); ?>
+		<link rel="icon" type="image/png" href="public/images/favicon.png"> <!--  Favicon needs to be generated -->
 	</head>
 
 	<body>
@@ -20,22 +20,22 @@
 			
 			<!--Logo holder-->
 			<div class="logo_holder">
-				<img class="logo" src="img/logo.png"></img>
+				<img class="logo" src="public/images/logo.png"></img>
 			</div>
 			
 			<!--Nav bar-->
 			<nav>
 				<a href="">Ministries</a>
-				<a href="calendar.php">Calendar</a>
+				<a href="application/views/calendar.php">Calendar</a>
 				<a href="">Missions</a>
 				<a href="">Online Giving</a>
-				<a href="">Sermons</a>
+				<a href="">Sermons</a> 
 				<a href="">About</a>
 			</nav>
 		</div>
 
 		<!--Showcase Image-->
-		<img class="shcase_img" src="img/img_1.png"></img>
+		<img class="shcase_img" src="public/images/img_1.png"></img>
 
 		<!--Begin Sections-->
 		<div class="container-fluid">
