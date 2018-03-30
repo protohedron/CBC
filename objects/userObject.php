@@ -1,4 +1,5 @@
 <?php
+
 	class user{
 		function signup($username, $first, $last, $password, $passwordconfirm, $question, $answer, $email, $premission){
 			include 'inc.php';
@@ -18,7 +19,7 @@
 				$stmt->bind_param("sssssssi", $newUsername, $newPassword, $newFirst, $newLast, $newEmail, $newQuestion, $newAnswer, $newPremission);
 
 				$newUsername = mysqli_real_escape_string($conn, $username);
-				$newPassword =password_hash($password, PASSWORD_DEFAULT);
+				$newPassword = password_hash($password, PASSWORD_DEFAULT);
 				$newEmail =mysqli_real_escape_string($conn, $email);
 				$newFirst =mysqli_real_escape_string($conn, $first);
 				$newLast =mysqli_real_escape_string($conn, $last);
@@ -39,6 +40,22 @@
 				return "Passwords do not match";
 			}
 
+		}
+
+		function login($username, $password){
+			include "inc.php";
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+			$query ="SELECT * FROM cbcuser WHERE userName = '$username'";
+			$results = $conn->query($query);
+			$rows = $results->fetch_all(MYSQLI_ASSOC);
+			foreach ($rows as $row){
+				if(password_verify($password, $row['userPassword']) == 1){
+					$_SESSION['LOGIN'] = $row["userPremission"];
+					return "Process complete";
+				} else{
+					return "Invalid Username or Password";
+				}
+			}
 		}
 
 		function updatePassword($password, $passwordConfirm, $id){
@@ -197,7 +214,7 @@
 	    		return "ID must be a valid integer";
 			}
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserID = ?");
+			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserID = ? AND UserDeleted=0");
 			$stmt->bind_param("i", $newID);
 			$newID = mysqli_real_escape_string($conn, $id);
 
@@ -213,7 +230,7 @@
 			include "inc.php";
 			
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser");
+			$stmt=$conn->prepare("SELECT userName, userFirst, userLast, userEmail, userQuestion FROM cbcuser WHERE UserDeleted=0");
 			$stmt->execute();
 			$res = $stmt->get_result();
 			$return = $res->fetch_all(MYSQLI_ASSOC);
@@ -226,7 +243,7 @@
 			include "inc.php";
 			
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
-			$stmt=$conn->prepare("SELECT UserName, UserFirst, UserLast, userEmail, userQuestion FROM cbcuser WHERE UserName = '?'");
+			$stmt=$conn->prepare("SELECT userName, userFirst, userLast, userEmail, userQuestion FROM cbcuser WHERE UserName = '?' AND UserDeleted=0");
 			$stmt->bind_param("s", $newUsername);
 			$newUsername = mysqli_real_escape_string($conn, $username);
 
@@ -238,6 +255,24 @@
 			$conn->close();
 			return $return;
 		}
+
+		function fetchQuesion($username){
+			include "inc.php";
+			
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+			$stmt=$conn->prepare("SELECT userQuestion FROM cbcuser WHERE UserName = '?' AND UserDeleted = 0");
+			$stmt->bind_param("s", $newUsername);
+			$newUsername = mysqli_real_escape_string($conn, $username);
+
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
+			$conn->close();
+			return $return;
+		}
+
 		function checkAnswer($answer, $username){
 		include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);

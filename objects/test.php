@@ -1,10 +1,9 @@
 <?php
-	include "CalanderObject.php";
+	include "userObject.php";
 
-	$object = new calander();
-	$return = $object->fetchSingleEvent(3);
-	print_r($return);
-
+	$object = new user();
+	echo $return = $object->login('admin', 'password');
+	echo $_SESSION['LOGIN'];
 
 
 

@@ -136,7 +136,7 @@
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
 			$stmt =$conn->prepare("UPDATE cbcStaff SET staffDelete = 1 WHERE staffID=?");
-			$stmt->bind_param("i", $id);
+			$stmt->bind_param("i", $newID);
 			$newID =mysqli_real_escape_string($conn, $id);
 
 
@@ -155,7 +155,7 @@
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("SELECT * FROM CBCstaff");
+			$stmt =$conn->prepare("SELECT * FROM CBCstaff WHERE staffDelete = 1");
 			$stmt->execute();
 			$res = $stmt->get_result();
 			$return = $res->fetch_all(MYSQLI_ASSOC);
@@ -173,10 +173,95 @@
 			include "inc.php";
 			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
 	
-			$stmt =$conn->prepare("SELECT * FROM cbcStaff WHERE staffId = ?");
+			$stmt =$conn->prepare("SELECT * FROM cbcStaff WHERE staffId = ? and staffDelete = 1");
 			$stmt->bind_param("i", $newID);
 			$newID =mysqli_real_escape_string($conn, $id);
 
+			$stmt->execute();
+			$res = $stmt->get_result();
+			$return = $res->fetch_all(MYSQLI_ASSOC);
+			
+			$stmt->close();
+			$conn->close();
+			return $return;
+		}
+		function CreateElder($name, $postition){
+			include "inc.php";
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+
+			$stmt =$conn->prepare("INSERT INTO cbcElders (ElderName, ElderPosition) VALUES (?,?)");
+			$stmt->bind_param("ss", $newName, $newPostition);
+
+			$newName = mysqli_real_escape_string($conn, $name);
+			$newPostition =mysqli_real_escape_string($conn, $postition);
+
+			if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
+			
+		}
+		function EditElder($name, $postition, $id){
+			if (filter_var($id, FILTER_VALIDATE_INT) == false){
+				return "Variables do not match required type";
+			}
+
+			include"inc.php";
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+
+			$stmt =$conn->prepare("UPDATE cbcElders SET elderName=?, elderPosition=? WHERE ElderID=?");
+			$stmt->bind_param("ssi", $newName, $newPostition, $newID);
+
+			$newName =mysqli_real_escape_string($conn, $name);
+			$newPostition =mysqli_real_escape_string($conn, $postition);
+			$newID =mysqli_real_escape_string($conn, $id);
+
+			if($stmt->execute()){
+					return "the process is complete";
+					$stmt->close();
+					$conn->close();
+				}else{
+					return "this process has failed";
+					$stmt->close();
+					$conn->close();
+				}
+		}
+
+		function deleteElder($id)
+		{
+			if (filter_var($id, FILTER_VALIDATE_INT) == false){
+					return "Variables do not match required type";
+			}
+			include "inc.php";
+
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+	
+			$stmt =$conn->prepare("UPDATE cbcElders SET elderDeleted = 1 WHERE elderID=?");
+			$stmt->bind_param("i", $newID);
+			$newID =mysqli_real_escape_string($conn, $id);
+
+
+			if($stmt->execute()){
+				return "the process is complete";
+				$stmt->close();
+				$conn->close();
+			}else{
+				return "this process has failed";
+				$stmt->close();
+				$conn->close();
+			}
+		}
+
+		function FetchAllElders(){
+			include "inc.php";
+			$conn = new mysqli($IP,$USERNAME,$PASSWORD, $DB);
+	
+			$stmt =$conn->prepare("SELECT * FROM cbcElders Where elderDeleted = 0");
 			$stmt->execute();
 			$res = $stmt->get_result();
 			$return = $res->fetch_all(MYSQLI_ASSOC);
